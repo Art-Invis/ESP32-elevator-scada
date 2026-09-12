@@ -1,0 +1,161 @@
+[
+    {
+        "id": "f9a5454498159b18",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "64df75312469930c",
+        "type": "mqtt in",
+        "z": "f9a5454498159b18",
+        "name": "MQTT IN ESP32",
+        "topic": "home/elevator/status",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "99ffe75d3b03bc58",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "b37072e3b73315ca"
+            ]
+        ]
+    },
+    {
+        "id": "b37072e3b73315ca",
+        "type": "json",
+        "z": "f9a5454498159b18",
+        "name": "JSON Parse",
+        "property": "payload",
+        "x": 390,
+        "y": 260,
+        "wires": [
+            [
+                "bf775b2d5dfbb5be",
+                "6dd0439054887457"
+            ]
+        ]
+    },
+    {
+        "id": "6dd0439054887457",
+        "type": "debug",
+        "z": "f9a5454498159b18",
+        "name": "Debug Parsed",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bf775b2d5dfbb5be",
+        "type": "function",
+        "z": "f9a5454498159b18",
+        "name": "Normalize + Moving Average",
+        "func": "…",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 300,
+        "wires": [
+            [
+                "005b9011e8446fcf",
+                "862138fc2bbafa67"
+            ]
+        ]
+    },
+    {
+        "id": "862138fc2bbafa67",
+        "type": "debug",
+        "z": "f9a5454498159b18",
+        "name": "Debug Normalized",
+        "active": true,
+        "tosidebar": true,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "005b9011e8446fcf",
+        "type": "influxdb out",
+        "z": "f9a5454498159b18",
+        "influxdb": "f020bf9a554cdce6",
+        "name": "InfluxDB OUT",
+        "measurement": "environment",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "Scada_Labs",
+        "bucket": "iot_data_n",
+        "x": 920,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "99ffe75d3b03bc58",
+        "type": "mqtt-broker",
+        "name": "Mobile",
+        "broker": "10.58.52.207",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f020bf9a554cdce6",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "",
+        "name": "Influx_DB_2x",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "a8687aab6b8fec14",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
